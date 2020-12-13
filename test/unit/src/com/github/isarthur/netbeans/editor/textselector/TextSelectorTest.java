@@ -247,6 +247,286 @@ public class TextSelectorTest extends NbTestCase {
                 getSelectedText());
     }
 
+    public void testAbstractKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public abstract class Test {\n"
+                + "\n"
+                + "        public abstract void test();\n"
+                + "    }");
+        setCaretPosition(53);
+        actionPerformed();
+        assertEquals("abstract", getSelectedText());
+    }
+
+    public void testAbstractKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public abstract class Test {\n"
+                + "\n"
+                + "        public abstract void test();\n"
+                + "    }");
+        setCaretPosition(45);
+        actionPerformed();
+        assertEquals("abstract", getSelectedText());
+    }
+
+    public void testDefaultKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public interface Test {\n"
+                + "\n"
+                + "        default void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(40);
+        actionPerformed();
+        assertEquals("default", getSelectedText());
+    }
+
+    public void testDefaultKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public interface Test {\n"
+                + "\n"
+                + "        default void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(33);
+        actionPerformed();
+        assertEquals("default", getSelectedText());
+    }
+
+    public void testFinalKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public final void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(41);
+        actionPerformed();
+        assertEquals("final", getSelectedText());
+    }
+
+    public void testFinalKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public final void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(36);
+        actionPerformed();
+        assertEquals("final", getSelectedText());
+    }
+
+    public void testNativeKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public native int square(int i);\n"
+                + "    }");
+        setCaretPosition(42);
+        actionPerformed();
+        assertEquals("native", getSelectedText());
+    }
+
+    public void testNativeKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public native int square(int i);\n"
+                + "    }");
+        setCaretPosition(36);
+        actionPerformed();
+        assertEquals("native", getSelectedText());
+    }
+
+    public void testPrivateKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        private void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(36);
+        actionPerformed();
+        assertEquals("private", getSelectedText());
+    }
+
+    public void testPrivateKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        private void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(29);
+        actionPerformed();
+        assertEquals("private", getSelectedText());
+    }
+
+    public void testProtectedKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        protected void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(38);
+        actionPerformed();
+        assertEquals("protected", getSelectedText());
+    }
+
+    public void testProtectedKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        protected void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(29);
+        actionPerformed();
+        assertEquals("protected", getSelectedText());
+    }
+
+    public void testPublicKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(35);
+        actionPerformed();
+        assertEquals("public", getSelectedText());
+    }
+
+    public void testPublicKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(29);
+        actionPerformed();
+        assertEquals("public", getSelectedText());
+    }
+
+    public void testStaticKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public static void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(42);
+        actionPerformed();
+        assertEquals("static", getSelectedText());
+    }
+
+    public void testStaticKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public static void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(36);
+        actionPerformed();
+        assertEquals("static", getSelectedText());
+    }
+
+    public void testStrictfpKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public strictfp void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(44);
+        actionPerformed();
+        assertEquals("strictfp", getSelectedText());
+    }
+
+    public void testStrictfpKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public strictfp void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(36);
+        actionPerformed();
+        assertEquals("strictfp", getSelectedText());
+    }
+
+    public void testSynchronizedKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public synchronized void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(48);
+        actionPerformed();
+        assertEquals("synchronized", getSelectedText());
+    }
+
+    public void testSynchronizedKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public synchronized void test() {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(36);
+        actionPerformed();
+        assertEquals("synchronized", getSelectedText());
+    }
+
+    public void testTransientKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        private transient String dontSaveMe;\n"
+                + "    }");
+        setCaretPosition(46);
+        actionPerformed();
+        assertEquals("transient", getSelectedText());
+    }
+
+    public void testTransientKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        private transient String dontSaveMe;\n"
+                + "    }");
+        setCaretPosition(37);
+        actionPerformed();
+        assertEquals("transient", getSelectedText());
+    }
+
+    public void testVolatileKeywordSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        static volatile boolean ready;\n"
+                + "    }");
+        setCaretPosition(44);
+        actionPerformed();
+        assertEquals("volatile", getSelectedText());
+    }
+
+    public void testVolatileKeywordSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        static volatile boolean ready;\n"
+                + "    }");
+        setCaretPosition(36);
+        actionPerformed();
+        assertEquals("volatile", getSelectedText());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {

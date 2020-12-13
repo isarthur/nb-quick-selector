@@ -30,4 +30,11 @@ public class ModifierSelection extends Selection {
             Direction direction, CompilationController controller) {
         super(editor, ts, selectionStart, selectionEnd, direction, controller);
     }
+
+    @Override
+    public void select() {
+        long startPosition = tokenSequence.offset();
+        long endPosition = tokenSequence.offset() + tokenSequence.token().length();
+        select((int) startPosition, (int) endPosition);
+    }
 }
