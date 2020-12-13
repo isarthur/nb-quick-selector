@@ -527,6 +527,330 @@ public class TextSelectorTest extends NbTestCase {
         assertEquals("volatile", getSelectedText());
     }
 
+    public void testIntegerLiteralSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                count = 1024;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(104);
+        actionPerformed();
+        assertEquals("1024", getSelectedText());
+    }
+
+    public void testIntegerLiteralSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                count = 1024;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(100);
+        actionPerformed();
+        assertEquals("1024", getSelectedText());
+    }
+
+    public void testCharLiteralSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                ch = 'a';\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(100);
+        actionPerformed();
+        assertEquals("'a'", getSelectedText());
+    }
+
+    public void testCharLiteralSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                ch = 'a';\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(97);
+        actionPerformed();
+        assertEquals("'a'", getSelectedText());
+    }
+
+    public void testDoubleLiteralSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                count = 1024.5;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(106);
+        actionPerformed();
+        assertEquals("1024.5", getSelectedText());
+    }
+
+    public void testDoubleLiteralSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                count = 1024.5;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(100);
+        actionPerformed();
+        assertEquals("1024.5", getSelectedText());
+    }
+
+    public void testFloatLiteralSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                count = 1024.5F;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(107);
+        actionPerformed();
+        assertEquals("1024.5F", getSelectedText());
+    }
+
+    public void testFloatLiteralSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                count = 1024.5F;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(100);
+        actionPerformed();
+        assertEquals("1024.5F", getSelectedText());
+    }
+
+    public void testLongLiteralSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                count = 1024L;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(105);
+        actionPerformed();
+        assertEquals("1024L", getSelectedText());
+    }
+
+    public void testLongLiteralSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                count = 1024L;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(100);
+        actionPerformed();
+        assertEquals("1024L", getSelectedText());
+    }
+
+    public void testFalseSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                valid = false;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(105);
+        actionPerformed();
+        assertEquals("false", getSelectedText());
+    }
+
+    public void testFalseSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                valid = false;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(100);
+        actionPerformed();
+        assertEquals("false", getSelectedText());
+    }
+
+    public void testTrueSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                valid = true;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(104);
+        actionPerformed();
+        assertEquals("true", getSelectedText());
+    }
+
+    public void testTrueSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                valid = true;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(100);
+        actionPerformed();
+        assertEquals("true", getSelectedText());
+    }
+
+    public void testNullSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                file = null;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(103);
+        actionPerformed();
+        assertEquals("null", getSelectedText());
+    }
+
+    public void testNullSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s >= t) {\n"
+                + "                file = null;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(99);
+        actionPerformed();
+        assertEquals("null", getSelectedText());
+    }
+
+    public void testWhenPreviousTokenIsStringLiteralThenSelectItIncludingQuotes()
+            throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public static void test() {\n"
+                + "            repository.create(\"string literal\");\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(103);
+        actionPerformed();
+        assertEquals("\"string literal\"", getSelectedText());
+    }
+
+    public void testWhenPreviousTokenIsStringLiteralThenCaretShouldBeOnTheLeftSideOfLiteral()
+            throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public static void test() {\n"
+                + "            repository.create(\"string literal\");\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(103);
+        actionPerformed();
+        assertEquals(87, getCaretPosition());
+    }
+
+    public void testWhenNextTokenIsStringLiteralThenSelectItIncludingQuotes()
+            throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public static void test() {\n"
+                + "            repository.create(\"string literal\");\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(87);
+        actionPerformed();
+        assertEquals("\"string literal\"", getSelectedText());
+    }
+
+    public void testWhenNextTokenIsStringLiteralThenCaretShouldBeOnTheRightSideOfLiteral()
+            throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public static void test() {\n"
+                + "            repository.create(\"string literal\");\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(87);
+        actionPerformed();
+        assertEquals(103, getCaretPosition());
+    }
+
+    public void testWhenCurrentTokenIsStringLiteralThenSelectItExcludingQuotes()
+            throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public static void test() {\n"
+                + "            repository.create(\"string literal\");\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(90);
+        actionPerformed();
+        assertEquals("string literal", getSelectedText());
+    }
+
+    public void testWhenCurrentTokenIsStringLiteralThenCaretShouldBeBeforeClosingQuote()
+            throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public static void test() {\n"
+                + "            repository.create(\"string literal\");\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(90);
+        actionPerformed();
+        assertEquals(102, getCaretPosition());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {

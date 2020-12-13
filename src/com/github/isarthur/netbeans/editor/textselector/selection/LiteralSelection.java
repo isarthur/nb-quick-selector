@@ -16,8 +16,15 @@
 package com.github.isarthur.netbeans.editor.textselector.selection;
 
 import com.github.isarthur.netbeans.editor.textselector.Direction;
+import com.sun.source.tree.CompilationUnitTree;
+import com.sun.source.tree.Tree;
+import com.sun.source.util.SourcePositions;
+import com.sun.source.util.TreePath;
+import com.sun.source.util.Trees;
 import javax.swing.text.JTextComponent;
+import org.netbeans.api.java.lexer.JavaTokenId;
 import org.netbeans.api.java.source.CompilationController;
+import org.netbeans.api.java.source.TreeUtilities;
 import org.netbeans.api.lexer.TokenSequence;
 
 /**
@@ -26,8 +33,32 @@ import org.netbeans.api.lexer.TokenSequence;
  */
 public class LiteralSelection extends Selection {
 
-    public LiteralSelection(JTextComponent editor, TokenSequence<?> ts, int selectionStart, int selectionEnd,
+    public LiteralSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart, int selectionEnd,
             Direction direction, CompilationController controller) {
-        super(editor, ts, selectionStart, selectionEnd, direction, controller);
+        super(editor, tokenSequence, selectionStart, selectionEnd, direction, controller);
+    }
+
+    @Override
+    public void select() {
+        TreeUtilities treeUtilities = controller.getTreeUtilities();
+        TreePath literalPath = treeUtilities.pathFor(tokenSequence.offset() + 1);
+        if (literalPath == null) {
+            return;
+        }
+        Tree literalTree = literalPath.getLeaf();
+        Trees trees = controller.getTrees();
+        SourcePositions sourcePositions = trees.getSourcePositions();
+        CompilationUnitTree compilationUnitTree = controller.getCompilationUnit();
+        int caretPosition = editor.getCaretPosition();
+        long startPosition = sourcePositions.getStartPosition(compilationUnitTree, literalTree);
+        long endPosition = sourcePositions.getEndPosition(compilationUnitTree, literalTree);
+        if (tokenSequence.token().id() == JavaTokenId.STRING_LITERAL) {
+            if (tokenSequence.offset() < caretPosition
+                    && caretPosition < tokenSequence.offset() + tokenSequence.token().length()) {
+                startPosition++;
+                endPosition--;
+            }
+        }
+        select((int) startPosition, (int) endPosition);
     }
 }
