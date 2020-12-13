@@ -49,8 +49,8 @@ import org.openide.util.NbBundle.Messages;
 public class TextSelector extends BaseAction {
 
     private static final long serialVersionUID = -5804809213732564866L;
-    private static final String MIME_TYPE = "mimeType";
-    private static final String JAVA_MIME_TYPE = "text/x-java";
+    private static final String MIME_TYPE = "mimeType"; //NOI18N
+    private static final String JAVA_MIME_TYPE = "text/x-java"; //NOI18N
     private int selectionEnd;
     private int selectionStart;
     private Direction direction = Direction.BACKWARD;
