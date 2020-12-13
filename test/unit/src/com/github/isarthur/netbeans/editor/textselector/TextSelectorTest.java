@@ -851,6 +851,58 @@ public class TextSelectorTest extends NbTestCase {
         assertEquals(102, getCaretPosition());
     }
 
+    public void testVariableDeclarationSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            Document document = editor.getDocument();\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(81);
+        actionPerformed();
+        assertEquals("Document document = editor.getDocument();", getSelectedText());
+    }
+
+    public void testVariableDeclarationSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            Document document = editor.getDocument();\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(80);
+        actionPerformed();
+        assertEquals("Document document = editor.getDocument();", getSelectedText());
+    }
+
+    public void testAssignmentSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            document = otherDocument;\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(72);
+        actionPerformed();
+        assertEquals("document = otherDocument", getSelectedText());
+    }
+
+    public void testAssignmentSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            document = otherDocument;\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(71);
+        actionPerformed();
+        assertEquals("document = otherDocument", getSelectedText());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {
