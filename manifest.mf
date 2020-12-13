@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: true
+OpenIDE-Module: com.github.isarthur.netbeans.editor.textselector
+OpenIDE-Module-Name: Text Selector
+OpenIDE-Module-Short-Description: Text selection in the NetBeans Editor
+OpenIDE-Module-Long-Description: Text selection in the NetBeans Editor
+OpenIDE-Module-Display-Category: Editing
+OpenIDE-Module-Localizing-Bundle: com/github/isarthur/netbeans/editor/textselector/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+
