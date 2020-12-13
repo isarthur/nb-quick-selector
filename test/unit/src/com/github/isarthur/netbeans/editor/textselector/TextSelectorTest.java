@@ -903,6 +903,34 @@ public class TextSelectorTest extends NbTestCase {
         assertEquals("document = otherDocument", getSelectedText());
     }
 
+    public void testBlockSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "    public void test() {\n"
+                + "    }\n"
+                + "}");
+        setCaretPosition(50);
+        actionPerformed();
+        assertEquals(
+                "{\n"
+                + "    }",
+                getSelectedText());
+    }
+
+    public void testBlockSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "    public void test() {\n"
+                + "    }\n"
+                + "}");
+        setCaretPosition(43);
+        actionPerformed();
+        assertEquals(
+                "{\n"
+                + "    }",
+                getSelectedText());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {
