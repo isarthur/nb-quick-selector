@@ -30,9 +30,9 @@ import org.netbeans.api.lexer.TokenSequence;
  *
  * @author Arthur Sadykov
  */
-public class WhileStmtSelection extends Selection {
+public class DoWhileStmtSelection extends Selection {
 
-    public WhileStmtSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart,
+    public DoWhileStmtSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart,
             int selectionEnd, Direction direction, CompilationController controller) {
         super(editor, tokenSequence, selectionStart, selectionEnd, direction, controller);
     }
@@ -40,16 +40,16 @@ public class WhileStmtSelection extends Selection {
     @Override
     public void select() {
         TreeUtilities treeUtilities = controller.getTreeUtilities();
-        TreePath whileStatementPath = treeUtilities.pathFor(tokenSequence.offset() + 1);
-        if (whileStatementPath == null) {
+        TreePath doWhileStatementPath = treeUtilities.pathFor(tokenSequence.offset() + 1);
+        if (doWhileStatementPath == null) {
             return;
         }
-        Tree whileStatementTree = whileStatementPath.getLeaf();
+        Tree doWhileStatementTree = doWhileStatementPath.getLeaf();
         Trees trees = controller.getTrees();
         SourcePositions sourcePositions = trees.getSourcePositions();
         CompilationUnitTree compilationUnitTree = controller.getCompilationUnit();
-        long startPosition = sourcePositions.getStartPosition(compilationUnitTree, whileStatementTree);
-        long endPosition = sourcePositions.getEndPosition(compilationUnitTree, whileStatementTree);
+        long startPosition = sourcePositions.getStartPosition(compilationUnitTree, doWhileStatementTree);
+        long endPosition = sourcePositions.getEndPosition(compilationUnitTree, doWhileStatementTree);
         select((int) startPosition, (int) endPosition);
     }
 

@@ -33,8 +33,7 @@ import org.netbeans.api.lexer.TokenSequence;
 public class ForStmtSelection extends Selection {
 
     public ForStmtSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart,
-            int selectionEnd,
-            Direction direction, CompilationController controller) {
+            int selectionEnd, Direction direction, CompilationController controller) {
         super(editor, tokenSequence, selectionStart, selectionEnd, direction, controller);
     }
 

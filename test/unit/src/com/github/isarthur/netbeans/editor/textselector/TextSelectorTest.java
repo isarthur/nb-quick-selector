@@ -1275,6 +1275,40 @@ public class TextSelectorTest extends NbTestCase {
                 getSelectedText());
     }
 
+    public void testDoWhileStatementSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            do {\n"
+                + "            } while (true);\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(64);
+        actionPerformed();
+        assertEquals(
+                "do {\n"
+                + "            } while (true);",
+                getSelectedText());
+    }
+
+    public void testDoWhileStatementSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            do {\n"
+                + "            } while (true);\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(62);
+        actionPerformed();
+        assertEquals(
+                "do {\n"
+                + "            } while (true);",
+                getSelectedText());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {
