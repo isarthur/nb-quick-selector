@@ -1361,6 +1361,66 @@ public class TextSelectorTest extends NbTestCase {
         assertEquals("assert true : \"\";", getSelectedText());
     }
 
+    public void testTryStatementInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "    public void test() {\n"
+                + "        try {\n"
+                + "            a = b;\n"
+                + "        } catch(Exception ex) {\n"
+                + "            Exceptions.printStackTrace(ex);\n"
+                + "        } finally {\n"
+                + "            b = a;\n"
+                + "        }\n"
+                + "    }\n"
+                + "}");
+        setCaretPosition(202);
+        actionPerformed();
+        actionPerformed();
+        actionPerformed();
+        actionPerformed();
+        actionPerformed();
+        actionPerformed();
+        actionPerformed();
+        assertEquals(
+                "try {\n"
+                + "            a = b;\n"
+                + "        } catch(Exception ex) {\n"
+                + "            Exceptions.printStackTrace(ex);\n"
+                + "        } finally {\n"
+                + "            b = a;\n"
+                + "        }",
+                getSelectedText());
+    }
+
+    public void testTryStatementInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "    public void test() {\n"
+                + "        try {\n"
+                + "            a = b;\n"
+                + "        } catch(Exception ex) {\n"
+                + "            Exceptions.printStackTrace(ex);\n"
+                + "        } finally {\n"
+                + "            b = a;\n"
+                + "        }\n"
+                + "    }\n"
+                + "}");
+        setCaretPosition(53);
+        actionPerformed();
+        actionPerformed();
+        actionPerformed();
+        assertEquals(
+                "try {\n"
+                + "            a = b;\n"
+                + "        } catch(Exception ex) {\n"
+                + "            Exceptions.printStackTrace(ex);\n"
+                + "        } finally {\n"
+                + "            b = a;\n"
+                + "        }",
+                getSelectedText());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {

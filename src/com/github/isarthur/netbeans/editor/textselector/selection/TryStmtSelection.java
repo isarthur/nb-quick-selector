@@ -16,8 +16,15 @@
 package com.github.isarthur.netbeans.editor.textselector.selection;
 
 import com.github.isarthur.netbeans.editor.textselector.Direction;
+import com.sun.source.tree.CompilationUnitTree;
+import com.sun.source.tree.Tree;
+import com.sun.source.util.SourcePositions;
+import com.sun.source.util.TreePath;
+import com.sun.source.util.Trees;
 import javax.swing.text.JTextComponent;
+import org.netbeans.api.java.lexer.JavaTokenId;
 import org.netbeans.api.java.source.CompilationController;
+import org.netbeans.api.java.source.TreeUtilities;
 import org.netbeans.api.lexer.TokenSequence;
 
 /**
@@ -26,8 +33,69 @@ import org.netbeans.api.lexer.TokenSequence;
  */
 public class TryStmtSelection extends Selection {
 
-    public TryStmtSelection(JTextComponent editor, TokenSequence<?> ts, int selectionStart, int selectionEnd,
+    public TryStmtSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart, int selectionEnd,
             Direction direction, CompilationController controller) {
-        super(editor, ts, selectionStart, selectionEnd, direction, controller);
+        super(editor, tokenSequence, selectionStart, selectionEnd, direction, controller);
+    }
+
+    @Override
+    public void select() {
+        TreeUtilities treeUtilities = controller.getTreeUtilities();
+        Trees trees = controller.getTrees();
+        SourcePositions sourcePositions = trees.getSourcePositions();
+        CompilationUnitTree compilationUnitTree = controller.getCompilationUnit();
+        if (tokenSequence.token().id() == JavaTokenId.TRY
+                || tokenSequence.token().id() == JavaTokenId.CATCH
+                || tokenSequence.token().id() == JavaTokenId.FINALLY) {
+            long startPosition = tokenSequence.offset();
+            while (tokenSequence.moveNext()) {
+                if (tokenSequence.token().id() == JavaTokenId.LBRACE) {
+                    break;
+                }
+            }
+            if (tokenSequence.token().id() == JavaTokenId.LBRACE) {
+                TreePath blockPath = treeUtilities.pathFor(tokenSequence.offset() + 1);
+                if (blockPath != null) {
+                    Tree blockTree = blockPath.getLeaf();
+                    long endPosition = sourcePositions.getEndPosition(compilationUnitTree, blockTree);
+                    select((int) startPosition, (int) endPosition);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void select(int startPosition, int endPosition) {
+        if (direction == Direction.BACKWARD) {
+            if (isTextSelected()) {
+                if (selectionEnd < endPosition) {
+                    selectBackward(endPosition, startPosition);
+                    selectionStart = endPosition;
+                } else {
+                    selectBackward(selectionEnd, startPosition);
+                    selectionStart = selectionEnd;
+                }
+                selectionEnd = startPosition;
+            } else {
+                selectBackward(endPosition, startPosition);
+                selectionStart = endPosition;
+                selectionEnd = startPosition;
+            }
+        } else {
+            if (isTextSelected()) {
+                if (selectionStart < startPosition) {
+                    selectForward(selectionStart, endPosition);
+                    selectionEnd = endPosition;
+                } else {
+                    selectForward(startPosition, endPosition);
+                    selectionStart = startPosition;
+                    selectionEnd = endPosition;
+                }
+            } else {
+                selectForward(startPosition, endPosition);
+                selectionStart = startPosition;
+                selectionEnd = endPosition;
+            }
+        }
     }
 }
