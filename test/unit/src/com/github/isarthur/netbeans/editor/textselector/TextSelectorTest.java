@@ -1063,6 +1063,90 @@ public class TextSelectorTest extends NbTestCase {
                 getSelectedText());
     }
 
+    public void testRightParenthesisSelectionOfIfStatementInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s != t) {\n"
+                + "                t = s;\n"
+                + "            }n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(73);
+        actionPerformed();
+        assertEquals("(s != t)", getSelectedText());
+    }
+
+    public void testLeftParenthesisSelectionOfIfStatementInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s != t) {\n"
+                + "                t = s;\n"
+                + "            }n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(65);
+        actionPerformed();
+        assertEquals("(s != t)", getSelectedText());
+    }
+
+    public void testRightParenthesisSelectionOfMethodInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test(String name, int count) {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(69);
+        actionPerformed();
+        assertEquals("(String name, int count)", getSelectedText());
+    }
+
+    public void testLeftParenthesisSelectionOfMethodInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test(String name, int count) {\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(41);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("test(String name, int count)", getSelectedText());
+    }
+
+    public void testRightParenthesisSelectionOfMethodInvocationInBackwardDirection()
+            throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            test(name, count);\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(79);
+        actionPerformed();
+        assertEquals("(name, count)", getSelectedText());
+    }
+
+    public void testLeftParenthesisSelectionOfMethodInvocationInForwardDirection()
+            throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            test(name, count);\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(62);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("test(name, count)", getSelectedText());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {
