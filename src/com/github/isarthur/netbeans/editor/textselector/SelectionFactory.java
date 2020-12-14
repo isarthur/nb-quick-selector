@@ -36,6 +36,7 @@ import com.github.isarthur.netbeans.editor.textselector.selection.Selection;
 import com.github.isarthur.netbeans.editor.textselector.selection.SemicolonSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.SeparatorTokenSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.SwitchStmtSelection;
+import com.github.isarthur.netbeans.editor.textselector.selection.ThrowStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.TryStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.UnaryExpressionSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.VoidTypeSelection;
@@ -163,6 +164,8 @@ public class SelectionFactory {
             return new EnumDeclarationSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.RETURN) {
             return new ReturnStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
+        } else if (id == JavaTokenId.THROW) {
+            return new ThrowStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.VOID) {
             return new VoidTypeSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.WHILE) {
