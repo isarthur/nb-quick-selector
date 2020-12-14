@@ -20,10 +20,8 @@ import com.github.isarthur.netbeans.editor.textselector.selection.AssertStmtSele
 import com.github.isarthur.netbeans.editor.textselector.selection.AssignmentOrVariableDeclarationSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.BinaryExpressionSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.BlockSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.ClassOrInterfaceDeclarationSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.DoWhileStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.EnclosedExpressionSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.EnumDeclarationSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.ForStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.IdentifierSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.IfStmtSelection;
@@ -40,7 +38,7 @@ import com.github.isarthur.netbeans.editor.textselector.selection.SwitchStmtSele
 import com.github.isarthur.netbeans.editor.textselector.selection.ThrowStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.TryStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.UnaryExpressionSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.VoidTypeSelection;
+import com.github.isarthur.netbeans.editor.textselector.selection.KeywordSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.WhileStmtSelection;
 import javax.swing.text.JTextComponent;
 import org.netbeans.api.java.lexer.JavaTokenId;
@@ -156,21 +154,20 @@ public class SelectionFactory {
                 || id == JavaTokenId.CATCH
                 || id == JavaTokenId.FINALLY) {
             return new TryStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.CLASS
-                || id == JavaTokenId.INTERFACE
-                || id == JavaTokenId.EXTENDS
-                || id == JavaTokenId.IMPLEMENTS) {
-            return new ClassOrInterfaceDeclarationSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.ENUM) {
-            return new EnumDeclarationSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.ASSERT) {
             return new AssertStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.RETURN) {
             return new ReturnStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.THROW) {
             return new ThrowStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.VOID) {
-            return new VoidTypeSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
+        } else if (id == JavaTokenId.CLASS
+                || id == JavaTokenId.ENUM
+                || id == JavaTokenId.INTERFACE
+                || id == JavaTokenId.EXTENDS
+                || id == JavaTokenId.IMPLEMENTS
+                || id == JavaTokenId.THROWS
+                || id == JavaTokenId.VOID) {
+            return new KeywordSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.WHILE) {
             return new WhileStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.DO) {
