@@ -30,9 +30,9 @@ import org.netbeans.api.lexer.TokenSequence;
  *
  * @author Arthur Sadykov
  */
-public class WhileStmtSelection extends Selection {
+public class BlockStatementSelection extends Selection {
 
-    public WhileStmtSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart,
+    public BlockStatementSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart,
             int selectionEnd, Direction direction, CompilationController controller) {
         super(editor, tokenSequence, selectionStart, selectionEnd, direction, controller);
     }

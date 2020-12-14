@@ -30,26 +30,26 @@ import org.netbeans.api.lexer.TokenSequence;
  *
  * @author Arthur Sadykov
  */
-public class AssignmentOrVariableDeclarationSelection extends Selection {
+public class StatementSelection extends Selection {
 
-    public AssignmentOrVariableDeclarationSelection(JTextComponent editor, TokenSequence<?> tokenSequnce,
-            int selectionStart, int selectionEnd, Direction direction, CompilationController controller) {
-        super(editor, tokenSequnce, selectionStart, selectionEnd, direction, controller);
+    public StatementSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart,
+            int selectionEnd, Direction direction, CompilationController controller) {
+        super(editor, tokenSequence, selectionStart, selectionEnd, direction, controller);
     }
 
     @Override
     public void select() {
         TreeUtilities treeUtilities = controller.getTreeUtilities();
-        TreePath primitiveTypePath = treeUtilities.pathFor(tokenSequence.offset() + 1);
-        if (primitiveTypePath == null) {
+        TreePath statementPath = treeUtilities.pathFor(tokenSequence.offset() + 1);
+        if (statementPath == null) {
             return;
         }
-        Tree primitiveTypeTree = primitiveTypePath.getLeaf();
+        Tree statementTree = statementPath.getLeaf();
         Trees trees = controller.getTrees();
         SourcePositions sourcePositions = trees.getSourcePositions();
         CompilationUnitTree compilationUnitTree = controller.getCompilationUnit();
-        long startPosition = sourcePositions.getStartPosition(compilationUnitTree, primitiveTypeTree);
-        long endPosition = sourcePositions.getEndPosition(compilationUnitTree, primitiveTypeTree);
+        long startPosition = sourcePositions.getStartPosition(compilationUnitTree, statementTree);
+        long endPosition = sourcePositions.getEndPosition(compilationUnitTree, statementTree);
         select((int) startPosition, (int) endPosition);
     }
 }

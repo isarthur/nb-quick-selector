@@ -47,7 +47,8 @@ public class SemicolonSelection extends Selection {
         }
         expressionStatementPath = treeUtilities.getPathElementOfKind(
                 EnumSet.of(Tree.Kind.ASSERT, Tree.Kind.BREAK, Tree.Kind.CONTINUE, Tree.Kind.EXPRESSION_STATEMENT,
-                        Tree.Kind.RETURN, Tree.Kind.THROW, Tree.Kind.VARIABLE),
+                        Tree.Kind.IMPORT, Tree.Kind.METHOD, Tree.Kind.PACKAGE, Tree.Kind.RETURN, Tree.Kind.THROW,
+                        Tree.Kind.VARIABLE),
                 expressionStatementPath);
         if (expressionStatementPath == null) {
             return;

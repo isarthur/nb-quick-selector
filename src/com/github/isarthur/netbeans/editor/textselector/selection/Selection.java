@@ -47,8 +47,7 @@ public abstract class Selection {
         this.controller = controller;
     }
 
-    public void select() {
-    }
+    public abstract void select();
 
     protected void select(int startPosition, int endPosition) {
         int start;

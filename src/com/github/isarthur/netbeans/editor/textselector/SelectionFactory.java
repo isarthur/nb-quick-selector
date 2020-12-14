@@ -16,30 +16,19 @@
 package com.github.isarthur.netbeans.editor.textselector;
 
 import com.github.isarthur.netbeans.editor.textselector.exception.UnsupportedTokenException;
-import com.github.isarthur.netbeans.editor.textselector.selection.AssertStmtSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.AssignmentOrVariableDeclarationSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.BinaryExpressionSelection;
+import com.github.isarthur.netbeans.editor.textselector.selection.ExpressionSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.BlockSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.DoWhileStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.EnclosedExpressionSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.ForStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.IdentifierSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.IfStmtSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.ImportDeclarationSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.LiteralSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.ModifierSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.PackageDeclarationSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.PrimitiveTypeSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.ReturnStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.Selection;
 import com.github.isarthur.netbeans.editor.textselector.selection.SemicolonSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.SeparatorTokenSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.SwitchStmtSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.ThrowStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.TryStmtSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.UnaryExpressionSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.KeywordSelection;
-import com.github.isarthur.netbeans.editor.textselector.selection.WhileStmtSelection;
+import com.github.isarthur.netbeans.editor.textselector.selection.StatementSelection;
+import com.github.isarthur.netbeans.editor.textselector.selection.BlockStatementSelection;
 import javax.swing.text.JTextComponent;
 import org.netbeans.api.java.lexer.JavaTokenId;
 import org.netbeans.api.java.source.CompilationController;
@@ -60,51 +49,55 @@ public class SelectionFactory {
         TokenId id = ts.token().id();
         if (id == JavaTokenId.AMP
                 || id == JavaTokenId.AMPAMP
+                || id == JavaTokenId.AMPEQ
+                || id == JavaTokenId.BANG
                 || id == JavaTokenId.BANGEQ
                 || id == JavaTokenId.BAR
                 || id == JavaTokenId.BARBAR
+                || id == JavaTokenId.BAREQ
+                || id == JavaTokenId.BOOLEAN
+                || id == JavaTokenId.BYTE
                 || id == JavaTokenId.CARET
+                || id == JavaTokenId.CARETEQ
+                || id == JavaTokenId.CHAR
+                || id == JavaTokenId.CLASS
+                || id == JavaTokenId.DOUBLE
+                || id == JavaTokenId.ENUM
+                || id == JavaTokenId.EQ
                 || id == JavaTokenId.EQEQ
+                || id == JavaTokenId.EXTENDS
+                || id == JavaTokenId.FLOAT
                 || id == JavaTokenId.GT
                 || id == JavaTokenId.GTEQ
                 || id == JavaTokenId.GTGT
+                || id == JavaTokenId.GTGTEQ
                 || id == JavaTokenId.GTGTGT
+                || id == JavaTokenId.GTGTGTEQ
+                || id == JavaTokenId.IMPLEMENTS
+                || id == JavaTokenId.INT
+                || id == JavaTokenId.INTERFACE
+                || id == JavaTokenId.LONG
                 || id == JavaTokenId.LT
                 || id == JavaTokenId.LTEQ
                 || id == JavaTokenId.LTLT
-                || id == JavaTokenId.MINUS
-                || id == JavaTokenId.PERCENT
-                || id == JavaTokenId.PLUS
-                || id == JavaTokenId.SLASH
-                || id == JavaTokenId.STAR) {
-            return new BinaryExpressionSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.BANG
-                || id == JavaTokenId.TILDE
-                || id == JavaTokenId.PLUSPLUS
-                || id == JavaTokenId.MINUSMINUS) {
-            return new UnaryExpressionSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.BOOLEAN
-                || id == JavaTokenId.BYTE
-                || id == JavaTokenId.CHAR
-                || id == JavaTokenId.DOUBLE
-                || id == JavaTokenId.FLOAT
-                || id == JavaTokenId.INT
-                || id == JavaTokenId.LONG
-                || id == JavaTokenId.SHORT) {
-            return new PrimitiveTypeSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.EQ
-                || id == JavaTokenId.AMPEQ
-                || id == JavaTokenId.BAREQ
-                || id == JavaTokenId.SLASHEQ
                 || id == JavaTokenId.LTLTEQ
+                || id == JavaTokenId.MINUS
                 || id == JavaTokenId.MINUSEQ
-                || id == JavaTokenId.STAREQ
-                || id == JavaTokenId.PLUSEQ
+                || id == JavaTokenId.MINUSMINUS
+                || id == JavaTokenId.PERCENT
                 || id == JavaTokenId.PERCENTEQ
-                || id == JavaTokenId.GTGTEQ
-                || id == JavaTokenId.GTGTGTEQ
-                || id == JavaTokenId.CARETEQ) {
-            return new AssignmentOrVariableDeclarationSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
+                || id == JavaTokenId.PLUS
+                || id == JavaTokenId.PLUSEQ
+                || id == JavaTokenId.PLUSPLUS
+                || id == JavaTokenId.SHORT
+                || id == JavaTokenId.SLASH
+                || id == JavaTokenId.SLASHEQ
+                || id == JavaTokenId.STAR
+                || id == JavaTokenId.STAREQ
+                || id == JavaTokenId.THROWS
+                || id == JavaTokenId.TILDE
+                || id == JavaTokenId.VOID) {
+            return new ExpressionSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.COMMA
                 || id == JavaTokenId.DOT
                 || id == JavaTokenId.WHITESPACE) {
@@ -146,36 +139,21 @@ public class SelectionFactory {
         } else if (id == JavaTokenId.IF
                 || id == JavaTokenId.ELSE) {
             return new IfStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.IMPORT) {
-            return new ImportDeclarationSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.PACKAGE) {
-            return new PackageDeclarationSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.TRY
                 || id == JavaTokenId.CATCH
                 || id == JavaTokenId.FINALLY) {
             return new TryStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.ASSERT) {
-            return new AssertStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.RETURN) {
-            return new ReturnStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.THROW) {
-            return new ThrowStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.CLASS
-                || id == JavaTokenId.ENUM
-                || id == JavaTokenId.INTERFACE
-                || id == JavaTokenId.EXTENDS
-                || id == JavaTokenId.IMPLEMENTS
-                || id == JavaTokenId.THROWS
-                || id == JavaTokenId.VOID) {
-            return new KeywordSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.WHILE) {
-            return new WhileStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.DO) {
-            return new DoWhileStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.FOR) {
-            return new ForStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
-        } else if (id == JavaTokenId.SWITCH) {
-            return new SwitchStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
+        } else if (id == JavaTokenId.ASSERT
+                || id == JavaTokenId.IMPORT
+                || id == JavaTokenId.PACKAGE
+                || id == JavaTokenId.RETURN
+                || id == JavaTokenId.THROW) {
+            return new StatementSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
+        } else if (id == JavaTokenId.DO
+                || id == JavaTokenId.WHILE
+                || id == JavaTokenId.FOR
+                || id == JavaTokenId.SWITCH) {
+            return new BlockStatementSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else {
             throw new UnsupportedTokenException(
                     "TokenSelectionFactory.create: unsupported token '" + ts.token().text() + "'."); //NOI18N
