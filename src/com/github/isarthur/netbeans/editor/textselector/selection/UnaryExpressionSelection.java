@@ -16,8 +16,14 @@
 package com.github.isarthur.netbeans.editor.textselector.selection;
 
 import com.github.isarthur.netbeans.editor.textselector.Direction;
+import com.sun.source.tree.CompilationUnitTree;
+import com.sun.source.tree.Tree;
+import com.sun.source.util.SourcePositions;
+import com.sun.source.util.TreePath;
+import com.sun.source.util.Trees;
 import javax.swing.text.JTextComponent;
 import org.netbeans.api.java.source.CompilationController;
+import org.netbeans.api.java.source.TreeUtilities;
 import org.netbeans.api.lexer.TokenSequence;
 
 /**
@@ -26,8 +32,24 @@ import org.netbeans.api.lexer.TokenSequence;
  */
 public class UnaryExpressionSelection extends Selection {
 
-    public UnaryExpressionSelection(JTextComponent editor, TokenSequence<?> ts, int selectionStart, int selectionEnd,
-            Direction direction, CompilationController controller) {
-        super(editor, ts, selectionStart, selectionEnd, direction, controller);
+    public UnaryExpressionSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart,
+            int selectionEnd, Direction direction, CompilationController controller) {
+        super(editor, tokenSequence, selectionStart, selectionEnd, direction, controller);
+    }
+
+    @Override
+    public void select() {
+        TreeUtilities treeUtilities = controller.getTreeUtilities();
+        TreePath unaryExpressionPath = treeUtilities.pathFor(tokenSequence.offset() + 1);
+        if (unaryExpressionPath == null) {
+            return;
+        }
+        Tree unaryExpressionTree = unaryExpressionPath.getLeaf();
+        Trees trees = controller.getTrees();
+        SourcePositions sourcePositions = trees.getSourcePositions();
+        CompilationUnitTree compilationUnitTree = controller.getCompilationUnit();
+        long startPosition = sourcePositions.getStartPosition(compilationUnitTree, unaryExpressionTree);
+        long endPosition = sourcePositions.getEndPosition(compilationUnitTree, unaryExpressionTree);
+        select((int) startPosition, (int) endPosition);
     }
 }

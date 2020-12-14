@@ -1421,6 +1421,400 @@ public class TextSelectorTest extends NbTestCase {
                 getSelectedText());
     }
 
+    public void testAmpSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i & k; } }");
+        setCaretPosition(50);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i & k", getSelectedText());
+    }
+
+    public void testAmpSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i & k; } }");
+        setCaretPosition(45);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i & k", getSelectedText());
+    }
+
+    public void testBarSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i | k; } }");
+        setCaretPosition(50);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i | k", getSelectedText());
+    }
+
+    public void testBarSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i | k; } }");
+        setCaretPosition(45);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i | k", getSelectedText());
+    }
+
+    public void testCaretSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i ^ k; } }");
+        setCaretPosition(50);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i ^ k", getSelectedText());
+    }
+
+    public void testCaretSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i ^ k; } }");
+        setCaretPosition(45);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i ^ k", getSelectedText());
+    }
+
+    public void testTildeSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i | ~k; } }");
+        setCaretPosition(51);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("~k", getSelectedText());
+    }
+
+    public void testTildeSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i | ~k; } }");
+        setCaretPosition(49);
+        actionPerformed();
+        assertEquals("~k", getSelectedText());
+    }
+
+    public void testLtLtSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i << k; } }");
+        setCaretPosition(51);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i << k", getSelectedText());
+    }
+
+    public void testLtLtSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i << k; } }");
+        setCaretPosition(45);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i << k", getSelectedText());
+    }
+
+    public void testGtGtSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i >> k; } }");
+        setCaretPosition(51);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i >> k", getSelectedText());
+    }
+
+    public void testGtGtSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i >> k; } }");
+        setCaretPosition(45);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i >> k", getSelectedText());
+    }
+
+    public void testGtGtGtSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i >>> k; } }");
+        setCaretPosition(52);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i >>> k", getSelectedText());
+    }
+
+    public void testGtGtGtSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { s = i >>> k; } }");
+        setCaretPosition(45);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i >>> k", getSelectedText());
+    }
+
+    public void testAmpAmpSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "    public void test() {\n"
+                + "        if(s && t) {}\n"
+                + "    }\n"
+                + "}");
+        setCaretPosition(62);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s && t", getSelectedText());
+    }
+
+    public void testAmpAmpSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "    public void test() {\n"
+                + "        if(s && t) {}\n"
+                + "    }\n"
+                + "}");
+        setCaretPosition(56);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s && t", getSelectedText());
+    }
+
+    public void testBarBarSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s || t) {} } }");
+        setCaretPosition(50);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s || t", getSelectedText());
+    }
+
+    public void testBarBarSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s || t) {} } }");
+        setCaretPosition(44);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s || t", getSelectedText());
+    }
+
+    public void testBangSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) {} } }");
+        setCaretPosition(51);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("!t", getSelectedText());
+    }
+
+    public void testBangSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) {} } }");
+        setCaretPosition(49);
+        actionPerformed();
+        assertEquals("!t", getSelectedText());
+    }
+
+    public void testPostfixDecrementSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) { i--; } } }");
+        setCaretPosition(58);
+        actionPerformed();
+        assertEquals("i--", getSelectedText());
+    }
+
+    public void testPostfixDecrementSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) { i--; } } }");
+        setCaretPosition(55);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i--", getSelectedText());
+    }
+
+    public void testPrefixDecrementSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) { --i; } } }");
+        setCaretPosition(58);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("--i", getSelectedText());
+    }
+
+    public void testPrefixDecrementSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) { --i; } } }");
+        setCaretPosition(55);
+        actionPerformed();
+        assertEquals("--i", getSelectedText());
+    }
+
+    public void testPostfixIncrementSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) { i++; } } }");
+        setCaretPosition(58);
+        actionPerformed();
+        assertEquals("i++", getSelectedText());
+    }
+
+    public void testPostfixIncrementSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) { i++; } } }");
+        setCaretPosition(55);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("i++", getSelectedText());
+    }
+
+    public void testPrefixIncrementSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) { ++i; } } }");
+        setCaretPosition(58);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("++i", getSelectedText());
+    }
+
+    public void testPrefixIncrementSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s && !t) { ++i; } } }");
+        setCaretPosition(55);
+        actionPerformed();
+        assertEquals("++i", getSelectedText());
+    }
+
+    public void testEqEqSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s == t) {} } }");
+        setCaretPosition(50);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s == t", getSelectedText());
+    }
+
+    public void testEqEqSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s == t) {} } }");
+        setCaretPosition(44);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s == t", getSelectedText());
+    }
+
+    public void testBangEqSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s != t) {} } }");
+        setCaretPosition(50);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s != t", getSelectedText());
+    }
+
+    public void testBangEqSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s != t) {} } }");
+        setCaretPosition(44);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s != t", getSelectedText());
+    }
+
+    public void testLtSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s < t) {} } }");
+        setCaretPosition(49);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s < t", getSelectedText());
+    }
+
+    public void testLtSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s < t) {} } }");
+        setCaretPosition(44);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s < t", getSelectedText());
+    }
+
+    public void testLtEqSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s <= t) {} } }");
+        setCaretPosition(50);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s <= t", getSelectedText());
+    }
+
+    public void testLtEqSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s <= t) {} } }");
+        setCaretPosition(44);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s <= t", getSelectedText());
+    }
+
+    public void testGtSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s > t) {} } }");
+        setCaretPosition(49);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s > t", getSelectedText());
+    }
+
+    public void testGtSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s > t) {} } }");
+        setCaretPosition(44);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s > t", getSelectedText());
+    }
+
+    public void testGtEqSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) {} } }");
+        setCaretPosition(50);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s >= t", getSelectedText());
+    }
+
+    public void testGtEqSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) {} } }");
+        setCaretPosition(44);
+        actionPerformed();
+        actionPerformed();
+        assertEquals("s >= t", getSelectedText());
+    }
+
+    public void testDivideSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b / c;} } }");
+        setCaretPosition(61);
+        actionPerformed();
+        assertEquals("b / c", getSelectedText());
+    }
+
+    public void testDivideSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b / c; } } }");
+        setCaretPosition(60);
+        actionPerformed();
+        assertEquals("b / c", getSelectedText());
+    }
+
+    public void testMinusSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b - c;} } }");
+        setCaretPosition(61);
+        actionPerformed();
+        assertEquals("b - c", getSelectedText());
+    }
+
+    public void testMinusSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b - c; } } }");
+        setCaretPosition(60);
+        actionPerformed();
+        assertEquals("b - c", getSelectedText());
+    }
+
+    public void testMultiplySelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b * c;} } }");
+        setCaretPosition(61);
+        actionPerformed();
+        assertEquals("b * c", getSelectedText());
+    }
+
+    public void testMultiplySelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b * c; } } }");
+        setCaretPosition(60);
+        actionPerformed();
+        assertEquals("b * c", getSelectedText());
+    }
+
+    public void testPlusSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b + c;} } }");
+        setCaretPosition(61);
+        actionPerformed();
+        assertEquals("b + c", getSelectedText());
+    }
+
+    public void testPlusSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b + c; } } }");
+        setCaretPosition(60);
+        actionPerformed();
+        assertEquals("b + c", getSelectedText());
+    }
+
+    public void testRemainderSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b % c;} } }");
+        setCaretPosition(61);
+        actionPerformed();
+        assertEquals("b % c", getSelectedText());
+    }
+
+    public void testRemainderSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText("public class Test { public void test() { if(s >= t) { a = b % c; } } }");
+        setCaretPosition(60);
+        actionPerformed();
+        assertEquals("b % c", getSelectedText());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {
