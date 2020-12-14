@@ -33,6 +33,7 @@ import com.github.isarthur.netbeans.editor.textselector.selection.ReturnStmtSele
 import com.github.isarthur.netbeans.editor.textselector.selection.Selection;
 import com.github.isarthur.netbeans.editor.textselector.selection.SemicolonSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.SeparatorTokenSelection;
+import com.github.isarthur.netbeans.editor.textselector.selection.SwitchStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.TryStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.UnaryExpressionSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.VoidTypeSelection;
@@ -164,9 +165,11 @@ public class SelectionFactory {
             return new VoidTypeSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.WHILE) {
             return new WhileStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
+        } else if (id == JavaTokenId.SWITCH) {
+            return new SwitchStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else {
-            throw new UnsupportedTokenException("TokenSelectionFactory.create: unsupported token '" + ts.token().text()
-                    + "'.");
+            throw new UnsupportedTokenException(
+                    "TokenSelectionFactory.create: unsupported token '" + ts.token().text() + "'."); //NOI18N
         }
     }
 }
