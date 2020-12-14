@@ -36,6 +36,7 @@ import com.github.isarthur.netbeans.editor.textselector.selection.SeparatorToken
 import com.github.isarthur.netbeans.editor.textselector.selection.TryStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.UnaryExpressionSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.VoidTypeSelection;
+import com.github.isarthur.netbeans.editor.textselector.selection.WhileStmtSelection;
 import javax.swing.text.JTextComponent;
 import org.netbeans.api.java.lexer.JavaTokenId;
 import org.netbeans.api.java.source.CompilationController;
@@ -161,6 +162,8 @@ public class SelectionFactory {
             return new ReturnStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.VOID) {
             return new VoidTypeSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
+        } else if (id == JavaTokenId.WHILE) {
+            return new WhileStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else {
             throw new UnsupportedTokenException("TokenSelectionFactory.create: unsupported token '" + ts.token().text()
                     + "'.");
