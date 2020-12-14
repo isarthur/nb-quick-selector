@@ -1335,6 +1335,32 @@ public class TextSelectorTest extends NbTestCase {
         assertEquals("throw new IllegalArgumentException();", getSelectedText());
     }
 
+    public void testAssertStatementSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            assert true : \"\";\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(68);
+        actionPerformed();
+        assertEquals("assert true : \"\";", getSelectedText());
+    }
+
+    public void testAssertStatementSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            assert true : \"\";\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(62);
+        actionPerformed();
+        assertEquals("assert true : \"\";", getSelectedText());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {

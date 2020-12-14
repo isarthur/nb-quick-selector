@@ -16,6 +16,7 @@
 package com.github.isarthur.netbeans.editor.textselector;
 
 import com.github.isarthur.netbeans.editor.textselector.exception.UnsupportedTokenException;
+import com.github.isarthur.netbeans.editor.textselector.selection.AssertStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.AssignmentOrVariableDeclarationSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.BinaryExpressionSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.BlockSelection;
@@ -162,6 +163,8 @@ public class SelectionFactory {
             return new ClassOrInterfaceDeclarationSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.ENUM) {
             return new EnumDeclarationSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
+        } else if (id == JavaTokenId.ASSERT) {
+            return new AssertStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.RETURN) {
             return new ReturnStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.THROW) {
