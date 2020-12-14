@@ -16,8 +16,14 @@
 package com.github.isarthur.netbeans.editor.textselector.selection;
 
 import com.github.isarthur.netbeans.editor.textselector.Direction;
+import com.sun.source.tree.CompilationUnitTree;
+import com.sun.source.tree.Tree;
+import com.sun.source.util.SourcePositions;
+import com.sun.source.util.TreePath;
+import com.sun.source.util.Trees;
 import javax.swing.text.JTextComponent;
 import org.netbeans.api.java.source.CompilationController;
+import org.netbeans.api.java.source.TreeUtilities;
 import org.netbeans.api.lexer.TokenSequence;
 
 /**
@@ -26,8 +32,25 @@ import org.netbeans.api.lexer.TokenSequence;
  */
 public class ReturnStmtSelection extends Selection {
 
-    public ReturnStmtSelection(JTextComponent editor, TokenSequence<?> ts, int selectionStart, int selectionEnd,
+    public ReturnStmtSelection(JTextComponent editor, TokenSequence<?> tokenSequence, int selectionStart,
+            int selectionEnd,
             Direction direction, CompilationController controller) {
-        super(editor, ts, selectionStart, selectionEnd, direction, controller);
+        super(editor, tokenSequence, selectionStart, selectionEnd, direction, controller);
+    }
+
+    @Override
+    public void select() {
+        TreeUtilities treeUtilities = controller.getTreeUtilities();
+        TreePath returnStatementPath = treeUtilities.pathFor(tokenSequence.offset() + 1);
+        if (returnStatementPath == null) {
+            return;
+        }
+        Tree returnStatementTree = returnStatementPath.getLeaf();
+        Trees trees = controller.getTrees();
+        SourcePositions sourcePositions = trees.getSourcePositions();
+        CompilationUnitTree compilationUnitTree = controller.getCompilationUnit();
+        long startPosition = sourcePositions.getStartPosition(compilationUnitTree, returnStatementTree);
+        long endPosition = sourcePositions.getEndPosition(compilationUnitTree, returnStatementTree);
+        select((int) startPosition, (int) endPosition);
     }
 }
