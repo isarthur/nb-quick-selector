@@ -22,6 +22,7 @@ import com.github.isarthur.netbeans.editor.textselector.selection.BlockSelection
 import com.github.isarthur.netbeans.editor.textselector.selection.ClassOrInterfaceDeclarationSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.EnclosedExpressionSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.EnumDeclarationSelection;
+import com.github.isarthur.netbeans.editor.textselector.selection.ForStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.IdentifierSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.IfStmtSelection;
 import com.github.isarthur.netbeans.editor.textselector.selection.ImportDeclarationSelection;
@@ -165,6 +166,8 @@ public class SelectionFactory {
             return new VoidTypeSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.WHILE) {
             return new WhileStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
+        } else if (id == JavaTokenId.FOR) {
+            return new ForStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else if (id == JavaTokenId.SWITCH) {
             return new SwitchStmtSelection(editor, ts, selectionStart, selectionEnd, direction, controller);
         } else {
