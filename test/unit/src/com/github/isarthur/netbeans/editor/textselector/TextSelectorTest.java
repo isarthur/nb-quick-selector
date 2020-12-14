@@ -931,6 +931,138 @@ public class TextSelectorTest extends NbTestCase {
                 getSelectedText());
     }
 
+    public void testIfBlockSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s != t) {\n"
+                + "                t = s;\n"
+                + "            } else {\n"
+                + "                s = t;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(64);
+        actionPerformed();
+        assertEquals(
+                "if (s != t) {\n"
+                + "                t = s;\n"
+                + "            }",
+                getSelectedText());
+    }
+
+    public void testIfBlockSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s != t) {\n"
+                + "                t = s;\n"
+                + "            } else {\n"
+                + "                s = t;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(62);
+        actionPerformed();
+        assertEquals(
+                "if (s != t) {\n"
+                + "                t = s;\n"
+                + "            }",
+                getSelectedText());
+    }
+
+    public void testElseBlockSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s != t) {\n"
+                + "                t = s;\n"
+                + "            } else {\n"
+                + "                s = t;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(117);
+        actionPerformed();
+        assertEquals(
+                "else {\n"
+                + "                s = t;\n"
+                + "            }",
+                getSelectedText());
+    }
+
+    public void testElseBlockSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "\n"
+                + "        public void test() {\n"
+                + "            if (s != t) {\n"
+                + "                t = s;\n"
+                + "            } else {\n"
+                + "                s = t;\n"
+                + "            }\n"
+                + "        }\n"
+                + "    }");
+        setCaretPosition(113);
+        actionPerformed();
+        assertEquals(
+                "else {\n"
+                + "                s = t;\n"
+                + "            }",
+                getSelectedText());
+    }
+
+    public void testElseIfBlockSelectionInBackwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "    public void test() {\n"
+                + "        if (s != t) {\n"
+                + "            t = s;\n"
+                + "        } else if (s > t) {\n"
+                + "            t++;\n"
+                + "        } else if (s < t) {\n"
+                + "            t = s + s;\n"
+                + "        } else {\n"
+                + "            s = t;\n"
+                + "        }\n"
+                + "    }\n"
+                + "}");
+        setCaretPosition(100);
+        actionPerformed();
+        assertEquals(
+                "else if (s > t) {\n"
+                + "            t++;\n"
+                + "        }",
+                getSelectedText());
+    }
+
+    public void testElseIfBlockSelectionInForwardDirection() throws BadLocationException, IOException {
+        setText(
+                "public class Test {\n"
+                + "    public void test() {\n"
+                + "        if (s != t) {\n"
+                + "            t = s;\n"
+                + "        } else if (s > t) {\n"
+                + "            t++;\n"
+                + "        } else if (s < t) {\n"
+                + "            t = s + s;\n"
+                + "        } else {\n"
+                + "            s = t;\n"
+                + "        }\n"
+                + "    }\n"
+                + "}");
+        setCaretPosition(96);
+        actionPerformed();
+        assertEquals(
+                "else if (s > t) {\n"
+                + "            t++;\n"
+                + "        }",
+                getSelectedText());
+    }
+
     private void setText(String text) throws BadLocationException, IOException {
         document.insertString(0, text, null);
         try ( OutputStream out = testFile.getOutputStream();  Writer writer = new OutputStreamWriter(out)) {
